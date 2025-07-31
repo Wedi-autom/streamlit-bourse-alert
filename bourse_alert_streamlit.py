@@ -7,14 +7,23 @@ st.set_page_config(page_title="Alerte Boursière IA", layout="wide")
 
 st.title("📉 Alerte de Chute Boursière")
 
-# Liste d'actions suivies
-tickers = st.multiselect("Sélectionnez les actions à suivre :", ['ENR1n', 'MSFT', 'NVDA', 'TSLA', 'AMZN', 'GOOGL'], default=['AAPL', 'MSFT'])
+# Liste d'actions suivies : Pharma, Énergie, IA
+liste_actions = [
+    # Pharma
+    'SNY', 'PFE', 'MRNA', 'JNJ', 'VLA.PA', 'ROG.S', 'NVS', 'BNTX',
+    # Énergie
+    'ENR.DE', 'SU.PA', 'XOM', 'TOTF.PA', 'BP.L', 'RDSA.AS', 'SGRE.MC',
+    # IA / Tech IA
+    'MSFT', 'GOOGL', 'NVDA', 'AAPL', 'AMZN', 'META', 'IBM'
+]
+
+tickers = st.multiselect("Sélectionnez les actions à suivre :", liste_actions, default=['MSFT', 'NVDA', 'SNY', 'ENR.DE'])
 seuil = st.slider("Seuil de chute (%) pour alerte :", 1, 10, 3)
 
 if st.button("🔍 Lancer l'analyse"):
     alertes = []
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    
+
     for ticker in tickers:
         df = yf.download(ticker, period='1d', interval='5m')
         if df.empty:
@@ -38,6 +47,7 @@ if st.button("🔍 Lancer l'analyse"):
             alertes.append(f"⚠️ {ticker} a chuté de {drop_percent:.2f}% !")
 
     if alertes:
-        st.error("\n".join(alertes))
+        message = "\n".join(alertes)
+        st.error(message)
     else:
         st.success(f"Aucune alerte détectée à {now}.")
