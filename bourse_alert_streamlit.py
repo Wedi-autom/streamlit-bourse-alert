@@ -8,7 +8,7 @@ st.set_page_config(page_title="Alerte Boursière IA", layout="wide")
 st.title("📉 Alerte de Chute Boursière")
 
 # Liste d'actions suivies
-tickers = st.multiselect("Sélectionnez les actions à suivre :", ['AAPL', 'MSFT', 'NVDA', 'TSLA', 'AMZN', 'GOOGL'], default=['AAPL', 'MSFT'])
+tickers = st.multiselect("Sélectionnez les actions à suivre :", ['ENR1n', 'MSFT', 'NVDA', 'TSLA', 'AMZN', 'GOOGL'], default=['AAPL', 'MSFT'])
 seuil = st.slider("Seuil de chute (%) pour alerte :", 1, 10, 3)
 
 if st.button("🔍 Lancer l'analyse"):
